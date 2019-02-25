@@ -1,1 +1,16 @@
-
+body{
+  font-family:Times New Roman;
+}
+p{
+}
+.blue{
+  color:blue;
+}
+.center{
+  display:block;
+  margin-left:auto;
+  margin-right:auto;
+}
+.blueborder{
+  border:1px solid blue;
+}
