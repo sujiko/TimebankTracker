@@ -5,7 +5,7 @@
        <title> Timebank </title>
        <meta charset = "utf-8">
     </head>
-	<h1> This site is a work in progress </h1>
+	<h1.center> This site is a work in progress </h1>
     <body>
 	<p> I AM A BODY </p>
     </body>
