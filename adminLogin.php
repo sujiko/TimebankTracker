@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (strcmp($userpassword, $row["DECODE(password,'".$crypt_str."')"]) == 0) {
          session_start();
          $_SESSION["username"] = $username;
-         header("Location: fileupload.html");
+         header("Location: csvUpload.php");
          die;
       } 
       else {

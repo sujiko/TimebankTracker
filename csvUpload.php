@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html>
   <meta charset="UTF-8">
-  <title>Upload Example</title>
+  <title>upload page</title>
 
-  <body>
     <form method="POST" action="csvUpload.php"
       enctype="multipart/form-data"> 
        csv file <input type="file" name="csv"><br>
       <input type="submit" value="Submit">
+    </form>
+    <form method="POST" action="logout.php">
+     <input type="submit" value="logout">
     </form>
 
 <?php
@@ -25,9 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	
    }
    else {
-      echo "<p>Error uploading the image.</p>";
+      echo "<p>Error uploading the .csv file</p>";
    }
 }
 ?>
-  </body>
 </html>
