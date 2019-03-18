@@ -1,19 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <meta charset="UTF-8">
-  <title>upload page</title>
-
-    <form method="POST" action="csvUpload.php"
-      enctype="multipart/form-data"> 
-       csv file <input type="file" name="csv"><br>
-      <input type="submit" value="Submit">
-    </form>
-    <form method="POST" action="logout.php">
-     <input type="submit" value="logout">
-    </form>
-
 <?php
-
+session_start();
+if(!isset($_SESSION["username"])){ //if login in session is not set
+    header("Location: adminLogin.php");
+}
+echo $_SESSION['username'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $upload_dir = "";
    if ($_FILES["csv"]["error"] == UPLOAD_ERR_OK) {
@@ -31,4 +21,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    }
 }
 ?>
+<html>
+  <meta charset="UTF-8">
+  <title>upload page</title>
+
+    <form method="POST" action="csvUpload.php"
+      enctype="multipart/form-data"> 
+       csv file <input type="file" name="csv"><br>
+      <input type="submit" value="Submit">
+    </form>
+    <form method="POST" action="logout.php">
+     <input type="submit" value="logout">
+    </form>
+
 </html>
