@@ -1,11 +1,33 @@
 use S19_430_Group2_Zeitz
 drop table if exists admin;
+drop table if exists students;
+drop table if exists assignments;
 create table admin( 
   username varchar(30),
   password character(60),
   PRIMARY KEY (username)
 );
+create table assignments(
+  pid varchar(30),
+  class varchar(30),
+  assignmentName varchar(50),
+  initDue varchar(30),
+  daysUsed int,
+  newDueDate varchar(30)
+);
+create table students(
+  pid varchar(30),
+  firstname varchar(30),
+  lastname varchar(30),
+  password character(60),
+  class varchar(60),
+  agreement int,
+  days int
+);
+insert into assignments values('jsmith','S19_430','final project','4/19/19',0,'-');
+insert into students values('jsmith','joe','smith',ENCODE('jsmith','PROJECT'),'S19_430',0,3);
+
 insert into admin values ('cwatt',ENCODE('cwatt','PROJECT')),
-('aMalyevac',ENCODE('aMalyevac','PROJECT')),
-('jZeitz',ENCODE('jZeitz','PROJECT')),
-('aQureshi',ENCODE('aQureshi','PROJECT'));
+('amalyevac',ENCODE('amalyevac','PROJECT')),
+('jzeitz',ENCODE('jzeitz','PROJECT')),
+('aqureshi',ENCODE('aqureshi','PROJECT'));
