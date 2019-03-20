@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $userpassword = $_POST["password"];
   // Get user's hashed password from the Users table
    $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
-   $sql = "SELECT username, DECODE(password,'".$crypt_str."') FROM student WHERE username='" . $conn->real_escape_string($username) . "'";
+   $sql = "SELECT pid, DECODE(password,'".$crypt_str."'),agreement FROM students WHERE pid='" . $conn->real_escape_string($username) . "'";
    $result = $conn->query($sql);
    if (!$result) {
       die("Error executing query: ($conn->errno) $conn->error");
@@ -26,7 +26,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if (strcmp($userpassword, $row["DECODE(password,'".$crypt_str."')"]) == 0) {
          session_start();
          $_SESSION["username"] = $username;
-         header("Location: fileupload.html");
+         if ($row['agreement']== 0){
+            header("Location: agreement.php");
+         }else{
+            header("Location: studentView.php");
+         }
          die;
       } 
       else {
