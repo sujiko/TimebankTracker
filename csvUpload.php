@@ -11,9 +11,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
       // Ignore any path information in the filename
       $name = basename($_FILES["csv"]["name"]);
-        
+      if($tmp_name['extension'] == 'csv'){  
       // Move the temp file and give it a new name 
       echo "<p>uploaded file'$name'</p>";
+      }
+      else{
+	echo "thats not a CSV file";
+      }
 	
    }
    else {
