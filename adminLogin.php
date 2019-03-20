@@ -35,11 +35,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    }
 }
 ?>
+<!DOCTYPE html>
 <html>
-  <link href="style.css" type="text/css" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css" type="text/css"/>
    <title>Login</title>
-    <body>
     <h1> Admin Login </h1>
+    <body>
     <form id="log" method="post" action="adminLogin.php">
       <div>
   	<center>
