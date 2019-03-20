@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<?php
+session_start();
+if(!isset($_SESSION["username"])){ //if login in session is not set
+  header("Location: adminLogin.php");
+}
+?>
 <html>
 <head>
 <link rel="stylesheet" href = "style.css">
