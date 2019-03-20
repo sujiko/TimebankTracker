@@ -11,8 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
       // Ignore any path information in the filename
       $name = basename($_FILES["csv"]["name"]);
-	//checks to see if the extension
-      if($tmp_name['extension'] == 'csv'){  
+	//stores the full file name/path with extention
+      $info = pathinfo($_FILES['uploadedfile']['name']);
+	//checks to see if the extension is a csv
+      if($info['extension'] == 'csv'){  
 	// display that the file is uploaded 
       echo "<p>uploaded file'$name'</p>";
       }
