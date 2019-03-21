@@ -33,11 +33,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $fixLastName = explode('\\',$lineArray[2]);
           $lineArray[2] = $fixLastName[0];
           //echo $lineArray[2].strlen($lineArray[2]).'<br>';
+          $sql = "select pid, firstname, lastname from students where pid='".$lineArray[0]."' and firstname='".$lineArray[1]."' and lastname='".$lineArray[2]."' and class='".$class."'";
+          $result = $conn->query($sql);
+          if ($result->num_rows==0) {
           $sql = "insert into students values('".$conn->real_escape_string($lineArray[0])."','".$conn->real_escape_string($lineArray[1])."','".$conn->real_escape_string($lineArray[2])."',ENCODE('".$conn->real_escape_string($lineArray[0])."','".$crypt_str."'),'".$class."',0,3)";
           $result = $conn->query($sql);
           if (!$result) {
             die("Error executing query: ($conn->errno) $conn->error");
           }
+          }else{
+          echo '<p>student already in system</p>';
+         }
         }
         fclose($myfile);
         //WE DID IT YA'LL
