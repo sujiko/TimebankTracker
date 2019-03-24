@@ -47,6 +47,22 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
   </div>
 </div>
 <body>
+<?php
+   include '../../conf.php';
+   $dbhost = $host;
+   $dbuser = $user;
+   $dbpass = $password;
+   $db = $database;
+   // Get values submitted from the form
+   $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+   $sql = "select distinct class from students";
+   $result = $conn->query($sql);
+   while($row = $result->fetch_assoc()){
+     echo"<table><caption>".$row['class']."</caption>";
+    //$newSql = "select ";
+     echo "</table>";
+   }
+?>
 </body>
 </html>
 

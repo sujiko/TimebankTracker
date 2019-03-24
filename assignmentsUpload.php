@@ -25,23 +25,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // check the file is a csv
     if($ext === 'csv'){
       $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+      $brokenUp = explode('_',$className[0]);
+      $className = $brokenUp[0]."_".$brokenUp[1];
       //check to make sure you can open the csv and assign it to a var
       if(($myfile = fopen($tmpName, 'r')) !== FALSE) {
         while(!feof($myfile)){
           $line=fgetcsv($myfile);
-          $fixLastName = explode("\n",$lineArray[2]);
-          //echo $fixLastName[0].strlen($fixLastName[0]);
-          $lineArray[2] = $fixLastName[0];
-          $sql = "select pid, firstname, lastname from students where pid='".$line[0]."' and firstname='".$line[1]."' and lastname='".$line[2]."' and class='".$class."'";
+          $sql = "select pid from students where class='".$className."'"; 
           $result = $conn->query($sql);
-          if ($result->num_rows==0) {
-            $sql = "insert into students values('".$conn->real_escape_string($line[0])."','".$conn->real_escape_string($line[1])."','".$conn->real_escape_string($line[2])."',ENCODE('".$conn->real_escape_string($line[0])."','".$crypt_str."'),'".$class."',0,3)";
-            $result = $conn->query($sql);
-            if (!$result) {
+          if($result->num_rows>0){
+            while($row = $result->fetch_assoc()){
+             $newSql = "insert into assignments values('".$conn->real_escape_string($row['pid'])."','".$className."','".$line[0]."','".$line[1]."',0,'-')";
+             $newResults = $conn->query($newSql);
+             if (!$newResults){
               die("Error executing query: ($conn->errno) $conn->error");
+             }
             }
           }else{
-            echo '<p>student already in system</p>';
+            echo "<p>please make sure the students are uploaded before the assignments</p>";
           }
         }
         fclose($myfile);
@@ -63,8 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
   <meta charset="UTF-8">
   <link rel="stylesheet" href = "home.css">
-  <title>upload page</title>
-  <h1>Upload a .csv containing your students here.</h1>
+  <title>Assignment Upload</title>
+  <h1>Upload a .csv containing your assignments per class here</h1>
 <body>
 <div class="navbar">
   <a href="adminHome.php">Home</a>
@@ -74,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <a href="studentsUpload.php">Upload Class </a>
       <a href="adminViewClasses.php">View Classes</a>
       <a href="studentsUpload.php">Delete All Classes</a>
-    </div>
+   </div>
   </div>
   <div class="dropdown">
     <button class="dropbtn">Assignment</button>
@@ -102,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 </body>
   <div>
-    <form method="POST" action="studentsUpload.php"
+    <form method="POST" action="assignmentsUpload.php"
       enctype="multipart/form-data"> 
        csv file <input type="file" name="csv"><br>
       <input type="submit" value="Submit">

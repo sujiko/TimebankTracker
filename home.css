@@ -92,4 +92,14 @@ p{
 .blueborder{
   border:1px solid blue;
 }
-
+table, th, td {
+  text-align: center;
+    margin-left:auto;
+    margin-right: auto;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+th, td {
+  padding: 5px;
+  text-align: left;
+}
