@@ -40,8 +40,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 <html>
-  <link href="style.css" type="text/css" rel="stylesheet"/>
+  <link href="home.css" type="text/css" rel="stylesheet"/>
    <title>Login</title>
+  <h1>Student Login</h1>
+  <div class="navbar">
+    <a href="index.php">Home</a>
+    <div class="dropdown">
+      <button class="dropbtn">Login</button>
+      <div class="dropdown-content">
+        <a href= "adminLogin.php"> Admin Login </a>
+        <a href= "studentLogin.php">Student Login </a>
+      </div>
+    </div>
+  </div>
     <body>
     <form id="log" method="post" action="studentLogin.php">
       <div>

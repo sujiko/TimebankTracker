@@ -37,13 +37,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="style.css" type="text/css"/>
+  <link rel="stylesheet" href="home.css" type="text/css"/>
    <title>Login</title>
-    <h1> Admin Login </h1>
+   <h1> Admin Login </h1>
+  <div class="navbar">
+    <a href="index.php">Home</a>
+    <div class="dropdown">
+      <button class="dropbtn">Login</button>
+      <div class="dropdown-content">
+        <a href= "adminLogin.php"> Admin Login </a>
+        <a href= "studentLogin.php">Student Login </a>
+      </div>
+    </div>
+  </div>
     <body>
     <form id="log" method="post" action="adminLogin.php">
       <div>
-  	<center>
+    <center>
         <label>Username: <input type="text" name="username" autofocus></label>
         </center>
       </div>
@@ -56,5 +66,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
   </body>
 </html>
-
-
