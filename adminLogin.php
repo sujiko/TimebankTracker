@@ -39,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
   <link rel="stylesheet" href="home.css" type="text/css"/>
    <title>Login</title>
-   <h1> Admin Login </h1>
   <div class="navbar">
     <a href="index.php">Home</a>
     <div class="dropdown">
@@ -50,6 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
     </div>
   </div>
+   <h1> Admin Login </h1>
     <body>
     <form id="log" method="post" action="adminLogin.php">
       <div>
