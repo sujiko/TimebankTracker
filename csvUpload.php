@@ -28,22 +28,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       //check to make sure you can open the csv and assign it to a var
       if(($myfile = fopen($tmpName, 'r')) !== FALSE) {
         while(!feof($myfile)){
-          $line=fgets($myfile);
-          $lineArray = explode(',',$line);
-          $fixLastName = explode('\\',$lineArray[2]);
+          $line=fgetcsv($myfile);
+          $fixLastName = explode("\n",$lineArray[2]);
+          //echo $fixLastName[0].strlen($fixLastName[0]);
           $lineArray[2] = $fixLastName[0];
-          //echo $lineArray[2].strlen($lineArray[2]).'<br>';
-          $sql = "select pid, firstname, lastname from students where pid='".$lineArray[0]."' and firstname='".$lineArray[1]."' and lastname='".$lineArray[2]."' and class='".$class."'";
+          $sql = "select pid, firstname, lastname from students where pid='".$line[0]."' and firstname='".$line[1]."' and lastname='".$line[2]."' and class='".$class."'";
           $result = $conn->query($sql);
           if ($result->num_rows==0) {
-          $sql = "insert into students values('".$conn->real_escape_string($lineArray[0])."','".$conn->real_escape_string($lineArray[1])."','".$conn->real_escape_string($lineArray[2])."',ENCODE('".$conn->real_escape_string($lineArray[0])."','".$crypt_str."'),'".$class."',0,3)";
-          $result = $conn->query($sql);
-          if (!$result) {
-            die("Error executing query: ($conn->errno) $conn->error");
-          }
+            $sql = "insert into students values('".$conn->real_escape_string($line[0])."','".$conn->real_escape_string($line[1])."','".$conn->real_escape_string($line[2])."',ENCODE('".$conn->real_escape_string($line[0])."','".$crypt_str."'),'".$class."',0,3)";
+            $result = $conn->query($sql);
+            if (!$result) {
+              die("Error executing query: ($conn->errno) $conn->error");
+            }
           }else{
-          echo '<p>student already in system</p>';
-         }
+            echo '<p>student already in system</p>';
+          }
         }
         fclose($myfile);
         //WE DID IT YA'LL
