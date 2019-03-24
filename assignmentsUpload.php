@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="dropdown-content">
       <a href="studentsUpload.php">Upload Class </a>
       <a href="adminViewClasses.php">View Classes</a>
-      <a href="studentsUpload.php">Delete All Classes</a>
+      <a href="deleteAll.php">Delete All Classes</a>
    </div>
   </div>
   <div class="dropdown">

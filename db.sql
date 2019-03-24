@@ -24,8 +24,6 @@ create table students(
   agreement int,
   days int
 );
-insert into assignments values('jsmith','S19_430','final project','4/19/19',0,'-');
-insert into students values('jsmith','joe','smith',ENCODE('jsmith','PROJECT'),'S19_430',0,3);
 
 insert into admin values ('cwatt',ENCODE('cwatt','PROJECT')),
 ('amalyevac',ENCODE('amalyevac','PROJECT')),
