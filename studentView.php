@@ -1,15 +1,40 @@
 <!DOCTYPE html>
+<?php
+session_start();
+if(!isset($_SESSION["username"])){ //if login in session is not set
+  header("Location: studentLogin.php");
+}
+?>
 <html>
-    <head>
-        <title>student portal </title>
-    </head>
-    <body>
-        <h1> student </h1>
-        <p lang="en"> Hate to break it to you, but what people call "love" is just a chemical
-            reaction that compels animals to breed. It hits hard Morty then it slowly 
-            fades leaving you stranded in a failing marriage. I did it. Your parents 
-            are going to do it. Break the cycle Morty, rise above, focus on science.
-        </p>
-    </body>
-</html>
+<head>
+<link rel="stylesheet" href = "home.css">
+<title>Student Portal</title>
+<meta charset = "utf-8">
+</head>
+<h1> Student Homepage </h1>
+<div class="navbar">
+  <a href="adminHome.php">Home</a>
+  <div class="dropdown">
+    <button class="dropbtn">Timebank Days</button>
+    <div class="dropdown-content">
+      <a href="">Use a Timebank Day</a>
+    </div>
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn">Assignment</button>
+    <div class="dropdown-content">
+      <a href="">View Assignments</a>
+    </div>
+  </div>
+  <div class="dropdown">
+    <button class="dropbtn">Account</button>
+    <div class="dropdown-content">
+      <a href="">Settings</a>
+      <a href="logout.php">Logout</a>
+    </div>
+  </div>
+</div>
+<body>
+</body>
+
 
