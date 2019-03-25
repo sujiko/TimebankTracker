@@ -64,7 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta charset="UTF-8">
   <link rel="stylesheet" href = "home.css">
   <title>upload page</title>
-  <h1>Upload a .csv containing your students here.</h1>
 <body>
 <div class="navbar">
   <a href="adminHome.php">Home</a>
@@ -80,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <button class="dropbtn">Assignment</button>
     <div class="dropdown-content">
       <a href="assignmentsUpload.php">Upload Assignments</a>
-      <a href="studentsUpload.php">Make Assignment</a>
+      <a href="makeAssignment.php">Make Assignment</a>
       <a href="studentsUpload.php">Edit Assignment</a>
     </div>
   </div>
@@ -101,6 +100,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
 </div>
 </body>
+  <h1>Upload a .csv containing your students here.</h1>
   <div>
     <form method="POST" action="studentsUpload.php"
       enctype="multipart/form-data"> 

@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <button class="dropbtn">Assignment</button>
     <div class="dropdown-content">
       <a href="assignmentsUpload.php">Upload Assignments</a>
-      <a href="studentsUpload.php">Make Assignment</a>
+      <a href="makeAssignment.php">Make Assignment</a>
       <a href="studentsUpload.php">Edit Assignment</a>
     </div>
   </div>

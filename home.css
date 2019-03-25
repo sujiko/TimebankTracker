@@ -106,5 +106,10 @@ th, td {
 img {
   width:850px;
   height:400px;
-
+}
+ul{
+  list-style-position: inside;
+  text-align:center;
+    margin-left:auto;
+    margin-right: auto;
 }

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE htmlmakeAssignment>
 <?php
 session_start();
 if(!isset($_SESSION["username"])){ //if login in session is not set
@@ -8,7 +8,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 <html>
 <head>
 <link rel="stylesheet" href = "home.css">
-<title>Admin Homepage</title>
+<title>View Classes</title>
 <meta charset = "utf-8">
 </head>
 <div class="navbar">
@@ -45,8 +45,29 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
     </div>
   </div>
 </div>
-<h1> Admin Homepage </h1>
-<body>
-</body>
+<div>
+<h2>Please select which class you would like to make an assignment for</h2>
+   <form method="POST" action="makeAssignment.php">
+<?php
+   include '../../conf.php';
+   $dbhost = $host;
+   $dbuser = $user;
+   $dbpass = $password;
+   $db = $database;
+   // Get values submitted from the form
+   $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+   $sql = "select distinct class from students";
+   $result = $conn->query($sql);
+   echo "<ul>";
+   while($row = $result->fetch_assoc()){
+     echo "<input type='checkbox' name='class' value='".$row['class']."'>".$row['class']."<br>";
+   }
+   echo "</ul>";
+?>
+  Assignment name<br><input type="text"<br><br>
+  initial due date<br><input type="text"<br><br>
+<input type="submit" value="submit">
+</form>
+</div>
 </html>
 
