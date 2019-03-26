@@ -80,6 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="dropdown-content">
       <a href="assignmentsUpload.php">Upload Assignments</a>
       <a href="makeAssignment.php">Make Assignment</a>
+      <a href="adminViewAssignments.php">View Assignment</a>
       <a href="studentsUpload.php">Edit Assignment</a>
     </div>
   </div>
@@ -88,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="dropdown-content">
       <a href="assignmentsUpload.php">Average Per Assignment</a>
       <a href="studentsUpload.php">Remaining Per Class</a>
-      <a href="studentsUpload.php">Edit Assignment</a>
     </div>
   </div>
   <div class="dropdown">

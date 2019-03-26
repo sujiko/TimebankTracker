@@ -26,6 +26,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
     <div class="dropdown-content">
       <a href="assignmentsUpload.php">Upload Assignments</a>
       <a href="makeAssignment.php">Make Assignment</a>
+      <a href="adminViewAssignments.php">View Assignment</a>
       <a href="studentsUpload.php">Edit Assignment</a>
     </div>
   </div>
@@ -34,7 +35,6 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
     <div class="dropdown-content">
       <a href="assignmentsUpload.php">Average Per Assignment</a>
       <a href="studentsUpload.php">Remaining Per Class</a>
-      <a href="studentsUpload.php">Edit Assignment</a>
     </div>
   </div>
   <div class="dropdown">
@@ -64,8 +64,8 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
    }
    echo "</ul>";
 ?>
-  Assignment name<br><input type="text"<br><br>
-  initial due date<br><input type="text"<br><br>
+  Assignment name<br><input type="text" name="assignmentDate"><br><br>
+  initial due date<br><input type="text"name-"initDue" ><br><br>
 <input type="submit" value="submit">
 </form>
 </div>

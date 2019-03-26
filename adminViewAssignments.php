@@ -8,7 +8,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 <html>
 <head>
 <link rel="stylesheet" href = "home.css">
-<title>Admin Homepage</title>
+<title>View Assignments</title>
 <meta charset = "utf-8">
 </head>
 <div class="navbar">
@@ -45,8 +45,29 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
     </div>
   </div>
 </div>
-<h1> Admin Homepage </h1>
+<p>The class title followed by the assignments and their initial due date will appear below</p>
 <body>
+<?php
+   include '../../conf.php';
+   $dbhost = $host;
+   $dbuser = $user;
+   $dbpass = $password;
+   $db = $database;
+   // Get values submitted from the form
+   $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+   $sql = "select distinct class from students";
+   $result = $conn->query($sql);
+   while($row = $result->fetch_assoc()){
+     echo "<table><caption>".$row['class']."</caption>";
+     echo "<tr><th>Assignment Name</th><th>Initial Due Date</th>";
+     $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' ";
+     $newResult = $conn->query($newSql);
+     while($curRow = $newResult->fetch_assoc()){
+      echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td>";
+     }
+     echo "</table><br>";
+   }
+?>
 </body>
 </html>
 
