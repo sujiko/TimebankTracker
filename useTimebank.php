@@ -7,7 +7,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 ?> 
 <html>
 <div class="navbar">
-  <a href="studentHome.php">Home</a>
+  <a href="studentView.php">Home</a>
   <div class="dropdown">
     <button class="dropbtn">Timebank Days</button>
     <div class="dropdown-content">

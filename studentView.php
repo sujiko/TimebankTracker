@@ -6,14 +6,8 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 }
 ?>
 <html>
-<head>
-<link rel="stylesheet" href = "home.css">
-<title>Student Portal</title>
-<meta charset = "utf-8">
-</head>
-<h1> Student Homepage </h1>
 <div class="navbar">
-  <a href="adminHome.php">Home</a>
+  <a href="studentView.php">Home</a>
   <div class="dropdown">
     <button class="dropbtn">Timebank Days</button>
     <div class="dropdown-content">
@@ -23,7 +17,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
   <div class="dropdown">
     <button class="dropbtn">Assignment</button>
     <div class="dropdown-content">
-      <a href="">View Assignments</a>
+      <a href="studentViewAssignments.php">View Assignments</a>
     </div>
   </div>
   <div class="dropdown">
@@ -34,6 +28,13 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
     </div>
   </div>
 </div>
+<head>
+<link rel="stylesheet" href = "home.css">
+<title>Student Portal</title>
+<meta charset = "utf-8">
+<h1> Student Homepage </h1>
+</head>
+
 <body>
 </body>
 
