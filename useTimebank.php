@@ -30,12 +30,12 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 </div>
 <head>
 <link rel="stylesheet" href = "home.css">
-<title>Student Portal</title>
+<title>Timebank Use</title>
 <meta charset = "utf-8">
-<h1> Student Homepage </h1>
+<h1> Use a Timebank Day </h1>
 </head>
-
 <body>
+<?php
+	
+?>
 </body>
-
-
