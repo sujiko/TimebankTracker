@@ -1,14 +1,28 @@
-<!DOCTYPE htmlmakeAssignment>
+<!DOCTYPE html>
 <?php
 session_start();
 if(!isset($_SESSION["username"])){ //if login in session is not set
   header("Location: adminLogin.php");
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   include '../../conf.php';
+   $dbhost = $host;
+   $dbuser = $user;
+   $dbpass = $password;
+   $db = $database;
+   $className = $_POST['class'];    
+   $assignment= $_POST['assignmentName'];    
+   $dueDate = $_POST['initDue'];    
+   $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+
+
+
+}
 ?>
 <html>
 <head>
 <link rel="stylesheet" href = "home.css">
-<title>View Classes</title>
+<title>Make An Assignment</title>
 <meta charset = "utf-8">
 </head>
 <div class="navbar">
@@ -64,8 +78,8 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
    }
    echo "</ul>";
 ?>
-  Assignment name<br><input type="text" name="assignmentDate"><br><br>
-  initial due date<br><input type="text"name-"initDue" ><br><br>
+  Assignment name<br><input type="text" name="assignmentName"><br><br>
+  initial due date<br><input type="text"name="initDue" ><br><br>
 <input type="submit" value="submit">
 </form>
 </div>
