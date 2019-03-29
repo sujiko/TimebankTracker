@@ -5,18 +5,35 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
   header("Location: adminLogin.php");
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-   include '../../conf.php';
-   $dbhost = $host;
-   $dbuser = $user;
-   $dbpass = $password;
-   $db = $database;
-   $className = $_POST['class'];    
-   $assignment= $_POST['assignmentName'];    
-   $dueDate = $_POST['initDue'];    
-   $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
-
-
-
+  include '../../conf.php';
+  $dbhost = $host;
+  $dbuser = $user;
+  $dbpass = $password;
+  $db = $database;
+  $className = $_POST['class'];    
+  $assignment= $_POST['assignmentName'];    
+  $dueDate = $_POST['initDue'];    
+  $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+  $sql = "select class,assignmentName,initDue from assignments where class='".$className."' and assignmentName ='".$assignment."'and initDue='".$dueDate."'";
+  $result = $conn->query($sql);
+  if ($result->num_rows==0){ 
+    $sql = "select pid from students where class='".$className."'"; 
+    $result = $conn->query($sql);
+    if($result->num_rows>0){
+      while($row = $result->fetch_assoc()){
+        $newSql = "insert into assignments values('".$conn->real_escape_string($row['pid'])."','".$className."','".$assignment."','".$dueDate."',0,'-')";
+        $newResults = $conn->query($newSql);
+        if (!$newResults){
+          die("Error executing query: ($conn->errno) $conn->error");
+        }
+      }
+      echo "<p>assignment ".$assignment." added for class ".$className."</p>";
+    }else{
+      echo "<p>please make sure the students are uploaded before the assignments</p>";
+    }
+  }else{
+     echo "<p>that assignment already exists for that class</p>";
+  }
 }
 ?>
 <html>
@@ -63,23 +80,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <h2>Please select which class you would like to make an assignment for</h2>
    <form method="POST" action="makeAssignment.php">
 <?php
-   include '../../conf.php';
-   $dbhost = $host;
-   $dbuser = $user;
-   $dbpass = $password;
-   $db = $database;
-   // Get values submitted from the form
-   $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
-   $sql = "select distinct class from students";
-   $result = $conn->query($sql);
-   echo "<ul>";
-   while($row = $result->fetch_assoc()){
-     echo "<input type='checkbox' name='class' value='".$row['class']."'>".$row['class']."<br>";
-   }
-   echo "</ul>";
+include '../../conf.php';
+$dbhost = $host;
+$dbuser = $user;
+$dbpass = $password;
+$db = $database;
+// Get values submitted from the form
+$conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+$sql = "select distinct class from students";
+$result = $conn->query($sql);
+echo "<ul>";
+while($row = $result->fetch_assoc()){
+  echo "<input type='radio' name='class' value='".$row['class']."'>".$row['class']."<br>";
+}
+echo "</ul>";
 ?>
-  Assignment name<br><input type="text" name="assignmentName"><br><br>
-  initial due date<br><input type="text"name="initDue" ><br><br>
+  Assignment name<br><input type="text" name="assignmentName" required><br><br>
+  initial due date<br><input type="text"name="initDue" required><br><br>
 <input type="submit" value="submit">
 </form>
 </div>
