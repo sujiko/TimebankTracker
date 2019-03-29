@@ -23,7 +23,6 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
   <div class="dropdown">
     <button class="dropbtn">Account</button>
     <div class="dropdown-content">
-      <a href="studentSettings.php">Settings</a>
       <a href="changePassword.php">Change Password</a>
       <a href="logout.php">Logout</a>
     </div>
