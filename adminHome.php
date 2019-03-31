@@ -19,6 +19,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
       <a href="studentsUpload.php">Upload Class </a>
       <a href="adminViewClasses.php">View Classes</a>
       <a href="deleteAll.php">Delete All Classes</a>
+      <a href="addTimeBankDay.php">Give A Timebank Day</a>
     </div>
   </div>
   <div class="dropdown">
