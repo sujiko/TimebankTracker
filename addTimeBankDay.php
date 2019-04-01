@@ -4,6 +4,28 @@ session_start();
 if(!isset($_SESSION["username"])){ //if login in session is not set
   header("Location: adminLogin.php");
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
+  include '../../conf.php';
+  $dbhost = $host;
+  $dbuser = $user;
+  $dbpass = $password;
+  $db = $database;
+  $conn = new mysqli ($dbhost, $dbuser, $dbpass, $db);
+  //$result = $conn->query($sql);
+  $sql = "select days from students where pid='".$_POST['pid']."' and class='".$_POST['class']."'";
+   $result = $conn->query($sql);
+   if (!$result) {
+      die("Error executing query: ($conn->errno) $conn->error");
+   }
+   else {
+     $row = $result->fetch_assoc();
+     $count = $row['days'];
+     $count = $count+$_POST['days'];
+     $sql = "update students set days ='".$count."' where pid='".$_POST['pid']."' and class='".$_POST['class']."'";
+     $result = $conn->query($sql);
+
+   }
+}
 ?>
 <html>
 <head>
@@ -48,6 +70,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 </div>
 <p>All of the courses you are teaching this semester and the students in those courses will appear below</p>
 <body>
+<form method="POST" action="addTimeBankDay.php">
 <?php
    include '../../conf.php';
    $dbhost = $host;
@@ -59,7 +82,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
    $sql = "select distinct class from students";
    $result = $conn->query($sql);
    while($row = $result->fetch_assoc()){
-     echo "<table><caption>".$row['class']."</caption>";
+  echo "<table><caption><input type='radio' name='class' value='".$row['class']."'>".$row['class']."</caption><br>";
      echo "<tr><th>PID</th><th>First Name</th><th>Last Name</th><th>Days Left</th></tr>";
      $newSql = "select pid, firstname, lastname, days from students where class='".$row['class']."' ";
      $newResult = $conn->query($newSql);
@@ -69,6 +92,10 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
      echo "</table><br>";
    }
 ?>
+  <label>input student pid</label><input type="text" name='pid'required><br>
+  <label>how many days to give</label><input type="number" name='days'required><br>
+<input type="submit" value = "submit">
+  
 </body>
 </html>
 
