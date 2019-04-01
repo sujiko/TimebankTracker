@@ -42,16 +42,24 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
    $dbpass = $password;
    $db = $database;
    $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
-    echo "<table>";
-    echo "<tr><th>Assignment Name </th><th>Due Date</th>";
-     $newSql = "SELECT distinct assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['username']."' ";
-     $newResult = $conn->query($newSql);
-     while($curRow = $newResult->fetch_assoc()){
-	//echo "<input type='radio name= 'assignment'" 
-	//if (isset($assignment) && $assignment== $curRow["assignmentName"]) echo "checked";
-	//echo "value = '".$curRow['assignmentName']."' > ".$curRow["assignmentName"]."";
-     	echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td>";
-	}
-     	echo "</table><br>";
+   $sql = "SELECT days FROM students WHERE pid ='".$_SESSION['username']."' ";
+   $result = $conn-> query($sql);
+   $row = $result->fetch_assoc();
+   echo "<p.warning> You have ".$row['days']." Timebank days to use. </p>";
+   echo "<p>Choose an assignment: </p>";
+   	 //echo "<table>";
+    	//echo "<tr><th>Assignment Name </th><th>Due Date</th>";
+   $newSql = "SELECT distinct assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['username']."' ";
+   $newResult = $conn->query($newSql);
+   while($curRow = $newResult->fetch_assoc()){
+	echo "<div style='display: inline-block; text-align: left;'>";
+	echo "<input type='radio' name= 'assignment' value = '".$curRow['assignmentName']."' > ".$curRow["assignmentName"]."<br>";
+
+	//if (i$assignment== $curRow["assignmentName"]);
+	//"value = '".$curRow['assignmentName']."' > ".$curRow["assignmentName"]."";
+     		//echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td>";
+   }
+	
+     	//echo "</table><br>";
 ?>
 </body>
