@@ -67,6 +67,7 @@
 body{
   text-align: center;
   font-family:Times New Roman;
+  background-color: #dddddd;
 }
 h1{
   color: #000084;
@@ -112,4 +113,12 @@ ul{
   text-align:center;
     margin-left:auto;
     margin-right: auto;
+}
+p.warning{
+   margin-left: 250px;
+   margin-right: 250px;
+   text-align: center;
+   color:red;
+   font-family: "Lucida Console";
+   	
 }
