@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$getInitDay = 'SELECT newDueDate FROM assignments WHERE pid = "'.$_SESSION["username"].'" AND assignmentName = "'.$_POST["assignment"].'"';
 	$getdate = $conn->query($sqlGetDate);
 	$row = $getdate->fetch_assoc();
-	echo "UPDATE assignments SET newDueDate = DATEADD('".$row['newDueDate']."', INTERVAL ".$_POST['days']." DAY) WHERE assignmentName = '".$_POST["assignment"]' AND pid = 'session whatever works'";
+//	echo "UPDATE assignments SET newDueDate = DATEADD('".$row['newDueDate']."', INTERVAL ".$_POST['days']." DAY) WHERE assignmentName = '".$_POST["assignment"]' AND pid = 'session whatever works'";
 //	if ($conn->query($sqlDate) == TRUE) {
 //	    echo "Record updated successfully";
 //	} else {
@@ -93,15 +93,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      		//echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td>";
    }
 ?>
-<<<<<<< HEAD
-       Number of Days to Use: <input type="number" name="days"><br>
+       Number of Days to Use: <input type="number" name="days" required><br>
       <input type="submit" value="Submit">
     </form>
   </div>
-=======
-<form method="POST" action="useTimebank.php">
-Amount of days: <input type="number" name="number" required>
-<input type="submit" value = "submit">
-
->>>>>>> 0ca70497d5a48e8276c9ac747ac410ebea412900
 </body>
