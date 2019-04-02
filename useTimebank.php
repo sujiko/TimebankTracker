@@ -52,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="dropdown">
     <button class="dropbtn">Account</button>
     <div class="dropdown-content">
-      <a href="studentSettings.php">Settings</a>
+      <a href="changePassword.php">Change Password</a>
       <a href="logout.php">Logout</a>
     </div>
   </div>
@@ -93,8 +93,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      		//echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td>";
    }
 ?>
+<<<<<<< HEAD
        Number of Days to Use: <input type="number" name="days"><br>
       <input type="submit" value="Submit">
     </form>
   </div>
+=======
+<form method="POST" action="useTimebank.php">
+Amount of days: <input type="number" name="number" required>
+<input type="submit" value = "submit">
+
+>>>>>>> 0ca70497d5a48e8276c9ac747ac410ebea412900
 </body>

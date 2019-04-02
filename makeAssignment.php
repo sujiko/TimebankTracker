@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
     if($result->num_rows>0){
       while($row = $result->fetch_assoc()){
-        $newSql = "insert into assignments values('".$conn->real_escape_string($row['pid'])."','".$className."','".$assignment."','".$dueDate."',0,'-')";
+        $newSql = "insert into assignments values('".$conn->real_escape_string($row['pid'])."','".$className."','".$assignment."','".$dueDate."',0,'".$dueDate."')";
         $newResults = $conn->query($newSql);
         if (!$newResults){
           die("Error executing query: ($conn->errno) $conn->error");
@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <div class="dropdown">
     <button class="dropbtn">Analysis</button>
     <div class="dropdown-content">
-      <a href="assignmentsUpload.php">Average Per Assignment</a>
+      <a href="averagePerAssignment.php">Average Per Assignment</a>
       <a href="studentsUpload.php">Remaining Per Class</a>
     </div>
   </div>
@@ -97,7 +97,7 @@ while($row = $result->fetch_assoc()){
 echo "</ul>";
 ?>
   Assignment name<br><input type="text" name="assignmentName" required><br><br>
-  initial due date<br><input type="text"name="initDue" required><br><br>
+  initial due date<br><input type="date"name="initDue" required><br><br>
 <input type="submit" value="submit">
 </form>
 </div>

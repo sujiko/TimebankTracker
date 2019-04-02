@@ -5,7 +5,6 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
   header("Location: index.php");
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
-  echo "in post";
   include '../../conf.php';
   $dbhost = $host;
   $dbuser = $user;
@@ -14,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
   $conn = new mysqli ($dbhost, $dbuser, $dbpass, $db);
   //$result = $conn->query($sql);
   $sql = "UPDATE admin set password=ENCODE('".$_POST['password']."','".$crypt_str."')where username='".$_SESSION["username"]."'";
-  echo $sql;
    $result = $conn->query($sql);
    if (!$result) {
       die("Error executing query: ($conn->errno) $conn->error");
@@ -54,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
   <div class="dropdown">
     <button class="dropbtn">Analysis</button>
     <div class="dropdown-content">
-      <a href="assignmentsUpload.php">Average Per Assignment</a>
+      <a href="averagePerAssignment.php">Average Per Assignment</a>
       <a href="studentsUpload.php">Remaining Per Class</a>
     </div>
   </div>

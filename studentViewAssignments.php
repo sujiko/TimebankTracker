@@ -23,7 +23,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
   <div class="dropdown">
     <button class="dropbtn">Account</button>
     <div class="dropdown-content">
-      <a href="studentSettings.php">Settings</a>
+      <a href="changePassword.php">Change Password</a>
       <a href="logout.php">Logout</a>
     </div>
   </div>
@@ -34,5 +34,31 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 <meta charset = "utf-8">
 <h1> Assignments List </h1>
 </head>
+<body bgcolor="#dddddd">
+<?php
+   include '../../conf.php';
+   $dbhost = $host;
+   $dbuser = $user;
+   $dbpass = $password;
+   $db = $database;
+   $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+    $sql = "SELECT days FROM students WHERE pid ='".$_SESSION['username']."' ";
+    $result = $conn-> query($sql);
+    $row = $result->fetch_assoc();
+    echo "<table>";
+    echo "<tr><th>Assignment Name </th><th>Due Date</th>";
+     $newSql = "SELECT distinct assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['username']."' ";
+     $newResult = $conn->query($newSql);
+     while($curRow = $newResult->fetch_assoc()){
+       // echo "<input type='radio name= 'assignment'"
+       // if (isset($assignment) && $assignment== $curRow["assignmentName"]) echo "checked";
+       // echo "value = '".$curRow['assignmentName']."' > ".$curRow["assignmentName"]."";
+      echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td>";
+        }
+      echo "</table><br>";
+?>
+
+
+</body>
 </html>
 

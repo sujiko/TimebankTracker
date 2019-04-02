@@ -49,25 +49,32 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 <p>The class title followed by the assignments and their initial due date will appear below</p>
 <body>
 <?php
-   include '../../conf.php';
-   $dbhost = $host;
-   $dbuser = $user;
-   $dbpass = $password;
-   $db = $database;
-   // Get values submitted from the form
-   $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
-   $sql = "select distinct class from students";
-   $result = $conn->query($sql);
-   while($row = $result->fetch_assoc()){
-     echo "<table><caption>".$row['class']."</caption>";
-     echo "<tr><th>Assignment Name</th><th>Initial Due Date</th>";
-     $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' ";
-     $newResult = $conn->query($newSql);
-     while($curRow = $newResult->fetch_assoc()){
-      echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td>";
-     }
-     echo "</table><br>";
-   }
+include '../../conf.php';
+$dbhost = $host;
+$dbuser = $user;
+$dbpass = $password;
+$db = $database;
+// Get values submitted from the form
+$conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+$sql = "select distinct class from students";
+$result = $conn->query($sql);
+while($row = $result->fetch_assoc()){
+  echo "<table><caption>".$row['class']."</caption>";
+  echo "<tr><th>Assignment Name</th><th>Initial Due Date</th><th>total used</th>";
+  $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' ";
+  $newResult = $conn->query($newSql);
+  while($curRow = $newResult->fetch_assoc()){
+    $countSql = "select SUM(daysUsed) from assignments where class='".$row['class']."' and assignmentName='".$curRow['assignmentName']."'";
+    $countRes = $conn->query($countSql);
+    if (!$countRes) {
+      die("Error executing query: ($conn->errno) $conn->error");
+    }else{
+      $countRow = $countRes->fetch_assoc();
+    }
+    echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td><td>".$countRow['SUM(daysUsed)']."</td></tr>";
+  }
+  echo "</table><br>";
+}
 ?>
 </body>
 </html>
