@@ -45,7 +45,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
     $sql = "SELECT days FROM students WHERE pid ='".$_SESSION['username']."' ";
     $result = $conn-> query($sql);
     $row = $result->fetch_assoc();
-  echo "<p.warning> YOU HAVE ".$row['days']." TIMEBANK DAYS LEFT! </p>";
+  echo "<p class = 'warning'> YOU HAVE ".$row['days']." TIMEBANK DAYS LEFT! </p>";
     echo "<table>";
     echo "<tr><th>Assignment Name </th><th>Due Date</th>";
      $newSql = "SELECT distinct assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['username']."' ";
