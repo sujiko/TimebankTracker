@@ -22,6 +22,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }else{
             echo "Error updating record: " . $conn->error;
         }
+	$sqldays = 'UPDATE assignments SET daysUsed = (daysUsed + '.$_POST['days'].') WHERE pid= "'.$_SESSION['username'].'" AND assignmentName = "'.$_POST['assignment'].'"';
+	if($conn->query($sqldays) == TRUE){
+	
+	}else{
+	     echo "Error updating days used: ".$CONN->error;
+	}
 	$initdays = 'SELECT newDueDate FROM assignments WHERE pid = "'.$_SESSION["username"].'" AND assignmentName = "'.$_POST["assignment"].'"';	
 	$getdate = $conn->query($initdays);
 	$row = $getdate->fetch_assoc();
@@ -86,7 +92,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $newResult = $conn->query($newSql);
    while($curRow = $newResult->fetch_assoc()){
 	echo "<div style='display: inline-block; text-align: left;'>";
-	echo "<input type='radio' name= 'assignment' value = '".$curRow['assignmentName']."' > ".$curRow["assignmentName"]."<br>";
+	echo "<input type='radio' name= 'assignment' value = '".$curRow['assignmentName']."' > ".$curRow["assignmentName"]."";
+	$counter = (40 - strlen($curRow["assignmentName"]));
+	for($counter; $counter > 0; $counter--){
+		echo "&nbsp";
+	}
+	echo "".$curRow['newDueDate']."<br>";
 
 	//if (i$assignment== $curRow["assignmentName"]);
 	//"value = '".$curRow['assignmentName']."' > ".$curRow["assignmentName"]."";
