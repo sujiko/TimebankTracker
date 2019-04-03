@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-if(!isset($_SESSION["username"])){ //if login in session is not set
+if(!isset($_SESSION["pid"])){ //if login in session is not set
   header("Location: studentLogin.php");
 }
 ?>
@@ -104,7 +104,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
      		//echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td>";
    }
 ?>
-       Number of Days to Use: <input type="number" name="days" required><br>
+       Number of Days to Use: <input type="number" min="0" name="days" required><br>
       <input type="submit" value="Submit">
     </form>
   </div>
