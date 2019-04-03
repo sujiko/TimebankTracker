@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
    }
 ?>
   <label>input student pid</label><input type="text" name='pid'required><br>
-  <label>how many days to give</label><input type="number" name='days'required><br>
+  <label>how many days to give</label><input type="number" min="0" name='days'required><br>
 <input type="submit" value = "submit">
   
 </body>

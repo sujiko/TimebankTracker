@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-if(!isset($_SESSION["username"])){ //if login in session is not set
+if(!isset($_SESSION["pid"])){ //if login in session is not set
   header("Location: studentLogin.php");
 }
 ?>
@@ -42,12 +42,12 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
    $dbpass = $password;
    $db = $database;
    $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
-    $sql = "SELECT days FROM students WHERE pid ='".$_SESSION['username']."' ";
+    $sql = "SELECT days FROM students WHERE pid ='".$_SESSION['pid']."' ";
     $result = $conn-> query($sql);
     $row = $result->fetch_assoc();
     echo "<table>";
     echo "<tr><th>Assignment Name </th><th>Due Date</th>";
-     $newSql = "SELECT distinct assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['username']."' ";
+     $newSql = "SELECT distinct assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."' ";
      $newResult = $conn->query($newSql);
      while($curRow = $newResult->fetch_assoc()){
        // echo "<input type='radio name= 'assignment'"

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-if(!isset($_SESSION["username"])){ //if login in session is not set
+if(!isset($_SESSION["pid"])){ //if login in session is not set
   header("Location: index.php");
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
   $db = $database;
   $conn = new mysqli ($dbhost, $dbuser, $dbpass, $db);
   //$result = $conn->query($sql);
-  $sql = "UPDATE students set agreement='1',password=ENCODE('".$_POST['password']."','".$crypt_str."')where pid='".$_SESSION["username"]."'";
+  $sql = "UPDATE students set password=ENCODE('".$_POST['password']."','".$crypt_str."')where pid='".$_SESSION["pid"]."'";
   echo $sql;
    $result = $conn->query($sql);
    if (!$result) {
@@ -48,7 +48,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
   <div class="dropdown">
     <button class="dropbtn">Account</button>
     <div class="dropdown-content">
-      <a href="studentSettings.php">Settings</a>
       <a href="changePassword.php">Change Password</a>
       <a href="logout.php">Logout</a>
     </div>

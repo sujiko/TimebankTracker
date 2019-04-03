@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       // See if submitted password matches the hash stored in the Users table    
       if (strcmp($userpassword, $row["DECODE(password,'".$crypt_str."')"]) == 0) {
          session_start();
-         $_SESSION["username"] = $username;
+         $_SESSION["pid"] = $username;
          if ($row['agreement']== 0){
             header("Location: agreement.php");
          }else{
