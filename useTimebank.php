@@ -22,15 +22,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }else{
             echo "Error updating record: " . $conn->error;
         }
-//	$getInitDay = 'SELECT newDueDate FROM assignments WHERE pid = "'.$_SESSION["username"].'" AND assignmentName = "'.$_POST["assignment"].'"';
-//	$getdate = $conn->query($sqlGetDate);
-//	$row = $getdate->fetch_assoc();
-//	echo "UPDATE assignments SET newDueDate = DATEADD('".$row['newDueDate']."', INTERVAL ".$_POST['days']." DAY) WHERE assignmentName = '".$_POST["assignment"]' AND pid = 'session whatever works'";
-//	if ($conn->query($sqlDate) == TRUE) {
-//	    echo "Record updated successfully";
-//	} else {
-//	    echo "Error updating record: " . $conn->error;
-//	}
+	$initdays = 'SELECT newDueDate FROM assignments WHERE pid = "'.$_SESSION["username"].'" AND assignmentName = "'.$_POST["assignment"].'"';	
+	$getdate = $conn->query($initdays);
+	$row = $getdate->fetch_assoc();
+	$sqlDate = "UPDATE assignments SET newDueDate = DATE_ADD('".$row['newDueDate']."', INTERVAL ".$_POST['days']." DAY) WHERE assignmentName = '".$_POST['assignment']."' AND pid = '".$_SESSION['username']."'";
+	if ($conn->query($sqlDate) == TRUE) {
+	    echo "date updated successfully";
+	} else {
+	    echo "Error updating record: " . $conn->error;
+	}
 
 	}
 ?>

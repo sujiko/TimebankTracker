@@ -11,9 +11,9 @@ create table assignments(
   pid varchar(30),
   class varchar(30),
   assignmentName varchar(50),
-  initDue varchar(30),
+  initDue DATE,
   daysUsed int,
-  newDueDate varchar(30)
+  newDueDate DATE
 );
 create table students(
   pid varchar(30),
