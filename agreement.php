@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
-if(!isset($_SESSION["username"])){ //if login in session is not set
+if(!isset($_SESSION["pid"])){ //if login in session is not set
   header("Location: studentLogin.php");
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
