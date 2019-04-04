@@ -131,3 +131,10 @@ ul{
    color: #006600;
 
 }
+.notvalid{
+   font-size: 40px !important;
+   margin-left: 250px;
+   margin-right: 250px;
+   text-align: center;
+   color: #cc0000;
+}

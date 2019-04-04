@@ -16,8 +16,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$assignmentclass = explode(',',$_POST['assignment']);
 	$assignment = $assignmentclass[0];
 	$class = $assignmentclass[1];
+	$sqlHowMany = "SELECT days FROM students WHERE pid ='".$_SESSION['pid']."'";
+	$DaysLeft = $conn->query($sqlHowMany);
+	$dayRow = $DaysLeft->fetch_assoc();
+	$daysLeft = $dayRow['days'];
+	$updated = FALSE;
+	$valid = TRUE;
+	if($daysLeft > $_POST['days']){
 	$sqldays = 'UPDATE students SET days = (days - '.$_POST['days'].') WHERE pid = "'.$_SESSION['pid'].'" AND class= "'.$class.'"';
-	$updated = TRUE;
 	if($conn->query($sqldays) == TRUE){
 	}else{
 		echo "Error updating student numdays: " . $conn->error;
@@ -39,8 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$updated = TRUE;
 		echo "Error updating date: " . $conn->error;
 	}
-
-}
+	}else{
+	
+	$valid = FALSE;
+	}
+	}		
 ?>
 <html>
 		<div class="navbar">
@@ -86,6 +95,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				echo "<p class='goal'> Due Date Updated </p>";
 			}
 			$updated = FALSE;
+			if($valid == FALSE){
+				echo "<p class= 'valid'> That is not a valid timebank entry </p>";
+			}
+			$valid = True;	
 			echo "<p class='warning'> You have ".$row['days']." Timebank days to use. </p>";
 			echo '<div> <form method="POST" action="useTimebank.php" enctype="multipart/form-data">';
 			echo "<p>Choose an assignment: </p>";
