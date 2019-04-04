@@ -123,6 +123,11 @@ ul{
    font-family: "Lucida Console";
    	
 }
-.display{
-   font-family: "Arial";
+.goal{
+   font-size: 40px !important;
+   margin-left: 250px;
+   margin-right: 250px;
+   text-align: center;
+   color: #006600;
+
 }
