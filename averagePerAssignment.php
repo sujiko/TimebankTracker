@@ -35,7 +35,6 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
     <button class="dropbtn">Analysis</button>
     <div class="dropdown-content">
       <a href="averagePerAssignment.php">Average Per Assignment</a>
-      <a href="studentsUpload.php">Remaining Per Class</a>
     </div>
   </div>
   <div class="dropdown">
