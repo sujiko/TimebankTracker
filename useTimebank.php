@@ -21,20 +21,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$dayRow = $DaysLeft->fetch_assoc();
 	$daysLeft = $dayRow['days'];
 	$updated = FALSE;
-	$valid = TRUE;
-	if($daysLeft > $_POST['days']){
+	$notValid = TRUE;
+	if($daysLeft >= $_POST['days']){
 	$sqldays = 'UPDATE students SET days = (days - '.$_POST['days'].') WHERE pid = "'.$_SESSION['pid'].'" AND class= "'.$class.'"';
 	if($conn->query($sqldays) == TRUE){
 	}else{
+		$notValid = TRUE;
+		$updated = FALSE;
 		echo "Error updating student numdays: " . $conn->error;
-		$updated = TRUE;
 	}
 	$sqldays = 'UPDATE assignments SET daysUsed = (daysUsed + '.$_POST['days'].') WHERE pid= "'.$_SESSION['pid'].'" AND assignmentName = "'.$assignment.'" AND class= "'.$class.'"';
 	if($conn->query($sqldays) == TRUE){
-
+		
 	}else{
-		echo "Error updating days used: ".$CONN->error;
 		$updated = TRUE;
+		$notValid = FALSE;
+		echo "Error updating days used: ".$CONN->error;
 	}
 	$initdays = 'SELECT newDueDate FROM assignments WHERE pid = "'.$_SESSION["pid"].'" AND assignmentName = "'.$assignment.'" AND class= "'.$class.'"';	
 	$getdate = $conn->query($initdays);
@@ -42,12 +44,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$sqlDate = "UPDATE assignments SET newDueDate = DATE_ADD('".$row['newDueDate']."', INTERVAL ".$_POST['days']." DAY) WHERE assignmentName = '".$assignment."' AND pid = '".$_SESSION['pid']."' AND class= '".$class."'";
 	if ($conn->query($sqlDate) == TRUE) {
 	} else {
-		$updated = TRUE;
+		$notValid = TRUE;
+		$updated = FALSE;
 		echo "Error updating date: " . $conn->error;
 	}
 	}else{
-	
-	$valid = FALSE;
+ 	$updated = FALSE;	
+	$notValid = TRUE;
 	}
 	}		
 ?>
@@ -95,10 +98,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				echo "<p class='goal'> Due Date Updated </p>";
 			}
 			$updated = FALSE;
-			if($valid == FALSE){
+			if($notValid == TRUE){
 				echo "<p class= 'valid'> That is not a valid timebank entry </p>";
 			}
-			$valid = True;	
+			$notValid = FALSE;	
 			echo "<p class='warning'> You have ".$row['days']." Timebank days to use. </p>";
 			echo '<div> <form method="POST" action="useTimebank.php" enctype="multipart/form-data">';
 			echo "<p>Choose an assignment: </p>";
