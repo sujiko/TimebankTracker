@@ -28,35 +28,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $brokenUp = explode('_',$className[0]);
       $className = $brokenUp[0]."_".$brokenUp[1];
       //check to make sure you can open the csv and assign it to a var
-      if(($myfile = fopen($tmpName, 'r')) !== FALSE) {
+      $sql = "select class from assignments where class='".$className."'";
+      $result = $conn->query($sql);
+      $row = $result->num_rows;
+      if(($myfile = fopen($tmpName, 'r')) !== FALSE && $row == 0) {
         while(!feof($myfile)){
+          if (strcmp("Work",$brokenUp[2])!=0){
+            $check = True;
+            $msg = "the csv is not a work file";
+            fclose($myfile);
+            break;
+          }
           $line=fgetcsv($myfile);
+          if (count($line)!=2){
+            $check = True;
+            $msg = "the csv is not formatted properly";
+            fclose($myfile);
+            break;
+          }
           $sql = "select pid from students where class='".$className."'"; 
           $result = $conn->query($sql);
           if($result->num_rows>0){
             while($row = $result->fetch_assoc()){
-             $newSql = "insert into assignments values('".$conn->real_escape_string($row['pid'])."','".$className."','".$line[0]."','".$line[1]."',0,'".$line[1]."')";
-             $newResults = $conn->query($newSql);
-             if (!$newResults){
-              die("Error executing query: ($conn->errno) $conn->error");
-             }
+              $newSql = "insert into assignments values('".$conn->real_escape_string($row['pid'])."','".$className."','".$line[0]."','".$line[1]."',0,'".$line[1]."')";
+              $newResults = $conn->query($newSql);
+              if (!$newResults){
+                die("Error executing query: ($conn->errno) $conn->error");
+              }else{
+                $check =True;
+                $msg = "all assignments uploaded";
+              }
             }
           }else{
             echo "<p>please make sure the students are uploaded before the assignments</p>";
           }
         }
         fclose($myfile);
-        //WE DID IT YA'LL
-        //echo "THATS A CSV";
-      }
-      else{
-        //something wasn't right with the csv
-        echo "could not open";
+      }elseif($row > 0){
+        $check = True;
+        $msg = "this csv was already uploaded";
+      }else{
+        $check = True;
+        $msg = "could not open the CSV";
       }
     }
     else{
-      //thats not a csv mate
-      echo "not a csv";
+      $check = True;
+      $msg = "please make sure it is CSV";
     }
   }
 }
@@ -100,6 +118,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>
 </div>
+<?php 
+if ($check){
+  echo "<br>".$msg;
+}  
+?>
   <h1>Upload a .csv containing your assignments per class here</h1>
 </body>
   <div>
