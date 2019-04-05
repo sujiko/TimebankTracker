@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       if(($myfile = fopen($tmpName, 'r')) !== FALSE) {
         while(!feof($myfile)){
           $line=fgetcsv($myfile);
+          if (count($line) == 3){          
           $fixLastName = explode("\n",$lineArray[2]);
           //echo $fixLastName[0].strlen($fixLastName[0]);
           $lineArray[2] = $fixLastName[0];
@@ -38,15 +39,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "insert into students values('".$conn->real_escape_string($line[0])."','".$conn->real_escape_string($line[1])."','".$conn->real_escape_string($line[2])."',ENCODE('".$conn->real_escape_string($line[0])."','".$crypt_str."'),'".$class."',0,3)";
             $result = $conn->query($sql);
             if (!$result) {
-              die("Error executing query: ($conn->errno) $conn->error");
+              $ahh =True;
+              $thing = ("Error executing query: ($conn->errno) $conn->error");
             }
           }else{
-            echo '<p>student already in system</p>';
+              $ahh =True;
+            $thing = "<p>some students are already in system</p>";
+          }
+          }else{
+            fclose($myfile);
+            $ahh =True;
+            $thing = "<p>that file is not formatted properly</p>";
+            break; 
           }
         }
         fclose($myfile);
-        //WE DID IT YA'LL
-        //echo "THATS A CSV";
       }
       else{
         //something wasn't right with the csv
@@ -101,6 +108,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   </div>
 </div>
 </body>
+<?php
+  if ($ahh == True){
+    echo $thing;
+  }
+?>
   <h1>Upload a .csv containing your students here.</h1>
   <div>
     <form method="POST" action="studentsUpload.php"

@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           if (!$result) {
             die("Error executing query: ($conn->errno) $conn->error");
           } else{
-            echo "you have deleted all from the table";
+            echo "you have deleted all students and assignments from the table";
           }
         }
       } 
