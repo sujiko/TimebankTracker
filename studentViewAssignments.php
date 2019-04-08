@@ -53,7 +53,9 @@ if(!isset($_SESSION["pid"])){ //if login in session is not set
        // echo "<input type='radio name= 'assignment'"
        // if (isset($assignment) && $assignment== $curRow["assignmentName"]) echo "checked";
        // echo "value = '".$curRow['assignmentName']."' > ".$curRow["assignmentName"]."";
-      echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td>";
+       $date = date_create($curRow['initDue']);
+       $date = date_format($date,"m/d/Y");
+      echo "<tr><td>".$curRow['assignmentName']."</td><td>".$date."</td>";
         }
       echo "</table><br>";
 ?>

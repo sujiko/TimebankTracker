@@ -55,7 +55,11 @@ if(!isset($_SESSION["pid"])){ //if login in session is not set
      $newSql = "SELECT assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."' AND class='".$classRow['class']."'";
      $newResult = $conn->query($newSql);
      while($curRow = $newResult->fetch_assoc()){
-      echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td><td>".$curRow['newDueDate']."</td>";
+       $date = date_create($curRow['initDue']);
+       $newDue = date_create($curRow['newDueDate']);
+        $newDue = date_format($newDue,"m/d/Y");
+        $date = date_format($date,"m/d/Y");
+      echo "<tr><td>".$curRow['assignmentName']."</td><td>".$date."</td><td>".$newDue."</td>";
         }
       echo "</table><br>";
       }
