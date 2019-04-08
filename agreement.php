@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
   $db = $database;
   $conn = new mysqli ($dbhost, $dbuser, $dbpass, $db);
   //$result = $conn->query($sql);
-  $sql = "UPDATE students set agreement='1',password=ENCODE('".$_POST['password']."','".$crypt_str."')where pid='".$_SESSION["username"]."'";
+  $sql = "UPDATE students set agreement='1',password=ENCODE('".$_POST['password']."','".$crypt_str."')where pid='".$_SESSION["pid"]."'";
   echo $sql;
    $result = $conn->query($sql);
    if (!$result) {
