@@ -50,7 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $result = $conn->query($sql);
           if($result->num_rows>0){
             while($row = $result->fetch_assoc()){
-              $newSql = "insert into assignments values('".$conn->real_escape_string($row['pid'])."','".$className."','".$line[0]."','".$line[1]."',0,'".$line[1]."')";
+              $date = date_create($line[1]);
+              $dateFor = date_format($date,"Y-m-d");
+              $newSql = "insert into assignments values('".$conn->real_escape_string($row['pid'])."','".$className."','".$line[0]."','".$dateFor."',0,'".$dateFor."')";
               $newResults = $conn->query($newSql);
               if (!$newResults){
                 die("Error executing query: ($conn->errno) $conn->error");
@@ -101,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <a href="assignmentsUpload.php">Upload Assignments</a>
       <a href="makeAssignment.php">Make Assignment</a>
       <a href="adminViewAssignments.php">View Assignment</a>
-      <a href="studentsUpload.php">Edit Assignment</a>
+      <a href="editAssignments.php">Edit Assignment</a>
     </div>
   </div>
   <div class="dropdown">

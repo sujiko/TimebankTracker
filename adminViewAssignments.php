@@ -28,7 +28,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
       <a href="assignmentsUpload.php">Upload Assignments</a>
       <a href="makeAssignment.php">Make Assignment</a>
       <a href="adminViewAssignments.php">View Assignment</a>
-      <a href="studentsUpload.php">Edit Assignment</a>
+      <a href="editAssignments.php">Edit Assignment</a>
     </div>
   </div>
   <div class="dropdown">
@@ -63,7 +63,8 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
      $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' ";
      $newResult = $conn->query($newSql);
      while($curRow = $newResult->fetch_assoc()){
-      echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td>";
+       $date = date_create($curRow['initDue']);
+      echo "<tr><td>".$curRow['assignmentName']."</td><td>".date_format($date,"m/d/Y")."</td>";
      }
      echo "</table><br>";
    }

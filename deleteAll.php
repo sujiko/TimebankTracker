@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <a href="assignmentsUpload.php">Upload Assignments</a>
       <a href="makeAssignment.php">Make Assignment</a>
       <a href="adminViewAssignments.php">View Assignment</a>
-      <a href="studentsUpload.php">Edit Assignment</a>
+      <a href="editAssignments.php">Edit Assignment</a>
     </div>
   </div>
   <div class="dropdown">

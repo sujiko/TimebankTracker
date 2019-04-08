@@ -2,33 +2,15 @@
 <?php
 session_start();
 if(!isset($_SESSION["username"])){ //if login in session is not set
-  header("Location: index.php");
-}
-if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
-  include '../../conf.php';
-  $dbhost = $host;
-  $dbuser = $user;
-  $dbpass = $password;
-  $db = $database;
-  $conn = new mysqli ($dbhost, $dbuser, $dbpass, $db);
-  //$result = $conn->query($sql);
-  $sql = "UPDATE admin set password=ENCODE('".$_POST['password']."','".$crypt_str."')where username='".$_SESSION["username"]."'";
-   $result = $conn->query($sql);
-   if (!$result) {
-      die("Error executing query: ($conn->errno) $conn->error");
-   }
-   else {
-         header("Location: adminHome.php");
-   }
+  header("Location: adminLogin.php");
 }
 ?>
 <html>
 <head>
-<link rel ="stylesheet" href= "home.css">
+<link rel="stylesheet" href = "home.css">
+<title>View Assignments</title>
 <meta charset = "utf-8">
-<title>Password change</title>
 </head>
-<body>
 <div class="navbar">
   <a href="adminHome.php">Home</a>
   <div class="dropdown">
@@ -37,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
       <a href="studentsUpload.php">Upload Class </a>
       <a href="adminViewClasses.php">View Classes</a>
       <a href="deleteAll.php">Delete All Classes</a>
-      <a href="addTimeBAnkDay.php">Give A Timebank Day</a>
+      <a href="addTimeBankDay.php">Give A Timebank Day</a>
     </div>
   </div>
   <div class="dropdown">
@@ -63,12 +45,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
     </div>
   </div>
 </div>
-
-<h1>Change your password</h1>
-<form method="POST" action="changePasswordAdmin.php">
-New Password: <input type="text" name="password" required>
-<input type="submit" value = "submit">
-</form>
+<p>The class title followed by the assignments and their initial due date will appear below</p>
+<body>
+<?php
+   include '../../conf.php';
+   $dbhost = $host;
+   $dbuser = $user;
+   $dbpass = $password;
+   $db = $database;
+   // Get values submitted from the form
+   $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+   $sql = "select distinct class from students";
+   $result = $conn->query($sql);
+   while($row = $result->fetch_assoc()){
+     echo "<input type='radio' name='class' value='".$row['class']."'>".$row['class']."<br>";
+     echo "Assignment Name &nbsp&nbsp&nbsp&nbsp&nbsp Initial Due Date<br>";
+     $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' ";
+     $newResult = $conn->query($newSql);
+     while($curRow = $newResult->fetch_assoc()){
+       $date = date_create($curRow['initDue']);
+      echo "<input type='radio' name='assignmentName' value='".$curRow['assignmentName']."'>".$curRow['assignmentName']."&nbsp&nbsp&nbsp&nbsp".date_format($date,"m/d/Y")."<br>";
+     }
+     echo "<br>";
+   }
+?>
 </body>
 </html>
 
