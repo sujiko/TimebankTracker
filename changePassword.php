@@ -5,14 +5,30 @@ if(!isset($_SESSION["pid"])){ //if login in session is not set
   header("Location: index.php");
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
-  echo "in post";
+  echo  "Incorrect old password";
   include '../../conf.php';
   $dbhost = $host;
   $dbuser = $user;
   $dbpass = $password;
   $db = $database;
   $conn = new mysqli ($dbhost, $dbuser, $dbpass, $db);
+  //$result = $conn->query($sql); 
+   $userpassword = $_POST["oldpassword"];
+
   //$result = $conn->query($sql);
+  $sql = "SELECT pid, DECODE(password,'".$crypt_str."') FROM students WHERE pid='" .$_SESSION["pid"] . "'";
+   $result = $conn->query($sql);
+   if (!$result) {
+      die("Error executing query: ($conn->errno) $conn->error");
+   }
+   elseif ($result->num_rows == 0) {
+      echo "<p>Incorrect username or password.</p>";
+   }
+   else {
+      $row = $result->fetch_assoc();
+      // See if submitted password matches the hash stored in the Users table    
+      if (strcmp($userpassword, $row["DECODE(password,'".$crypt_str."')"]) == 0) {
+ 
   $sql = "UPDATE students set password=ENCODE('".$_POST['password']."','".$crypt_str."')where pid='".$_SESSION["pid"]."'";
   echo $sql;
    $result = $conn->query($sql);
@@ -22,6 +38,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
    else {
          header("Location: studentView.php");
    }
+}
+}
 }
 ?>
 <html>
@@ -56,6 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
 <h1>Change your password</h1>
 <form method="POST" action="changePassword.php">
+Old Password: <input type="text" name = "oldpassword" required>
 New Password: <input type="text" name="password" required>
 <input type="submit" value = "submit">
 </form>

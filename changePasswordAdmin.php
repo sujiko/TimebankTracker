@@ -5,13 +5,29 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
   header("Location: index.php");
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
+  echo "Incorrect old password";
   include '../../conf.php';
   $dbhost = $host;
   $dbuser = $user;
   $dbpass = $password;
   $db = $database;
   $conn = new mysqli ($dbhost, $dbuser, $dbpass, $db);
+  $userpassword = $_POST["oldpassword"];
+
   //$result = $conn->query($sql);
+  $sql = "SELECT username, DECODE(password,'".$crypt_str."') FROM admin WHERE username='" .$_SESSION["username"] . "'";
+   $result = $conn->query($sql);
+   if (!$result) {
+      die("Error executing query: ($conn->errno) $conn->error");
+   }
+   elseif ($result->num_rows == 0) {
+      echo "<p>Incorrect username or password.</p>";
+   }
+   else {
+      $row = $result->fetch_assoc();
+      // See if submitted password matches the hash stored in the Users table    
+      if (strcmp($userpassword, $row["DECODE(password,'".$crypt_str."')"]) == 0) {
+ 
   $sql = "UPDATE admin set password=ENCODE('".$_POST['password']."','".$crypt_str."')where username='".$_SESSION["username"]."'";
    $result = $conn->query($sql);
    if (!$result) {
@@ -20,6 +36,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
    else {
          header("Location: adminHome.php");
    }
+}
+}
 }
 ?>
 <html>
@@ -66,6 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
 <h1>Change your password</h1>
 <form method="POST" action="changePasswordAdmin.php">
+Old Password: <input type="text" name = "oldpassword" required>
 New Password: <input type="text" name="password" required>
 <input type="submit" value = "submit">
 </form>
