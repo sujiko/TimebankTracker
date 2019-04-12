@@ -47,6 +47,13 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 </div>
 <h1> Admin Homepage </h1>
 <body>
+
+<p><font size = "5">Welcome to the Admin view </font></p>
+<p><font size = "5">For tools on how to manage your classes, navigate to the Class tab </font></p>
+<p><font size = "5">For tools on managing  your assignments, navigate to the Assignment tab  </font></p>
+<p><font size = "5">For an overview on how time bank days are being used, navigate to the analysis tab </font></p>
+<p><font size = "5">To change your password and sign out, navigate to the account tab</font></p>
+
 </body>
 </html>
 
