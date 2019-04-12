@@ -47,7 +47,7 @@ if(!isset($_SESSION["pid"])){ //if login in session is not set
     $row = $result->fetch_assoc();
     echo "<table>";
     echo "<tr><th>Assignment Name </th><th>Due Date</th>";
-     $newSql = "SELECT distinct assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."' ";
+     $newSql = "SELECT distinct assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."'order by initDue ";
      $newResult = $conn->query($newSql);
      while($curRow = $newResult->fetch_assoc()){
        // echo "<input type='radio name= 'assignment'"

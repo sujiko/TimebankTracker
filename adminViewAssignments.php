@@ -60,11 +60,11 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
    while($row = $result->fetch_assoc()){
      echo "<table><caption>".$row['class']."</caption>";
      echo "<tr><th>Assignment Name</th><th>Initial Due Date</th>";
-     $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' ";
+     $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' order by initDue";
      $newResult = $conn->query($newSql);
      while($curRow = $newResult->fetch_assoc()){
        $date = date_create($curRow['initDue']);
-      echo "<tr><td>".$curRow['assignmentName']."</td><td>".date_format($date,"m/d/Y")."</td>";
+      echo "<tr><td>".$curRow['assignmentName']."</td><td>".date_format($date,"m/d/Y")."</td></tr>";
      }
      echo "</table><br>";
    }

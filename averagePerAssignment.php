@@ -60,7 +60,7 @@ $result = $conn->query($sql);
 while($row = $result->fetch_assoc()){
   echo "<table><caption>".$row['class']."</caption>";
   echo "<tr><th>Assignment Name</th><th>Initial Due Date</th><th>total used</th>";
-  $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' ";
+  $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' order by initDue ";
   $newResult = $conn->query($newSql);
   while($curRow = $newResult->fetch_assoc()){
     $countSql = "select SUM(daysUsed) from assignments where class='".$row['class']."' and assignmentName='".$curRow['assignmentName']."'";
@@ -70,7 +70,9 @@ while($row = $result->fetch_assoc()){
     }else{
       $countRow = $countRes->fetch_assoc();
     }
-    echo "<tr><td>".$curRow['assignmentName']."</td><td>".$curRow['initDue']."</td><td>".$countRow['SUM(daysUsed)']."</td></tr>";
+    $date = date_create($curRow['initDue']);
+    $date = date_format($date,"m/d/Y");
+    echo "<tr><td>".$curRow['assignmentName']."</td><td>".$date."</td><td>".$countRow['SUM(daysUsed)']."</td></tr>";
   }
   echo "</table><br>";
 }

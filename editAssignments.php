@@ -4,6 +4,18 @@ session_start();
 if(!isset($_SESSION["username"])){ //if login in session is not set
   header("Location: adminLogin.php");
 }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   include '../../conf.php';
+   $dbhost = $host;
+   $dbuser = $user;
+   $dbpass = $password;
+   $db = $database;
+   // Get values submitted from the form
+   $username = $_POST["username"];
+   $userpassword = $_POST["password"];
+  // Get user's hashed password from the Users table
+   $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+}
 ?>
 <html>
 <head>
@@ -47,6 +59,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 </div>
 <p>The class title followed by the assignments and their initial due date will appear below</p>
 <body>
+    <form id="log" method="post" action="editAssignments.php">
 <?php
    include '../../conf.php';
    $dbhost = $host;
@@ -58,17 +71,24 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
    $sql = "select distinct class from students";
    $result = $conn->query($sql);
    while($row = $result->fetch_assoc()){
-     echo "<input type='radio' name='class' value='".$row['class']."'>".$row['class']."<br>";
-     echo "Assignment Name &nbsp&nbsp&nbsp&nbsp&nbsp Initial Due Date<br>";
+     echo "<table><caption>".$row['class']."</caption>";
+     echo "<tr><th>Assignment Name</th><th>Initial Due Date</th>";
      $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' ";
      $newResult = $conn->query($newSql);
      while($curRow = $newResult->fetch_assoc()){
        $date = date_create($curRow['initDue']);
-      echo "<input type='radio' name='assignmentName' value='".$curRow['assignmentName']."'>".$curRow['assignmentName']."&nbsp&nbsp&nbsp&nbsp".date_format($date,"m/d/Y")."<br>";
+       echo "<tr><td><input type='radio' name='assignmentName' value='".$row['class']." ".$curRow['assignmentName']."'>";
+       echo $curRow['assignmentName']."</td><td>".date_format($date,"m/d/Y")."</td></tr>";
      }
-     echo "<br>";
+     echo "</table><br>";
    }
 ?>
+      <select name="doing">
+        <option>update</option>
+        <option>delete</option>
+      </select>
+      <input type="submit" value="submit">
+</form>
 </body>
 </html>
 
