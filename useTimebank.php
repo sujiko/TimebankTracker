@@ -108,13 +108,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$result = $conn-> query($sql);
 				$row = $result->fetch_assoc();
 				echo "<p class='warning'> You have ".$row['days']." Timebank days to use. </p>";
-				echo "<div style='display: inline-block; text-align: left;'>";
-				echo "<p>class: ".$classRow['class']."</p>";
-				echo "<table>";
+				//echo "<div style='display: inline-block; text-align: left;'>";
+				echo "<table><caption>".$classRow['class']."</caption>";
 				$newSql = "SELECT assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."' AND class = '".$classRow['class']."' " ;
 				$newResult = $conn->query($newSql);
 				while($curRow = $newResult->fetch_assoc()){
-					echo "<tr><td><input type='radio' name= 'assignment' value = '".$curRow['assignmentName'].",".$classRow['class']."' > ".$curRow["assignmentName"]."</td></br>";
+					echo "<tr><td><input type='radio' name= 'assignment' value = '".$curRow['assignmentName'].",".$classRow['class']."' > ".$curRow["assignmentName"]."</td>";
 				//	echo "<td>".date_format($curRow['newDueDate'],"m/d/Y")."</td></tr>";
 					echo "<td>".$curRow['newDueDate']."</td></tr>";
 				}
