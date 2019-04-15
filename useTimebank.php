@@ -113,9 +113,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$newSql = "SELECT assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."' AND class = '".$classRow['class']."' " ;
 				$newResult = $conn->query($newSql);
 				while($curRow = $newResult->fetch_assoc()){
+					$date = date_create($curRow['newDueDate']);
 					echo "<tr><td><input type='radio' name= 'assignment' value = '".$curRow['assignmentName'].",".$classRow['class']."' > ".$curRow["assignmentName"]."</td>";
 				//	echo "<td>".date_format($curRow['newDueDate'],"m/d/Y")."</td></tr>";
-					echo "<td>".$curRow['newDueDate']."</td></tr>";
+					echo "<td>".date_format($date,"m/d/Y")."</td></tr>";
 				}
 				echo "</table>";
 			}
