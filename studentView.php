@@ -42,17 +42,19 @@ if(!isset($_SESSION["pid"])){ //if login in session is not set
    $dbpass = $password;
    $db = $database;
    $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
-    $sql = "SELECT days FROM students WHERE pid ='".$_SESSION['pid']."' ";
+    $sql = "SELECT SUM(days) FROM students WHERE pid ='".$_SESSION['pid']."' ";
+
     $result = $conn-> query($sql);
     $row = $result->fetch_assoc();
-  echo "<p class = 'warning'> YOU HAVE ".$row['days']." TIMEBANK DAYS LEFT! </p>";
+    $totalDays = $row['SUM(days)'];
+  echo "<p class = 'warning'> YOU HAVE A TOTAL OF ".$totalDays." TIMEBANK DAYS LEFT! </p>";
         $sqlClass = "SELECT class FROM students WHERE pid = '".$_SESSION['pid']."'";
         $resultClass = $conn->query($sqlClass);
  	while($classRow = $resultClass->fetch_assoc()){
         echo "<p style= 'text-align:center;' > class: ".$classRow['class']."</p>";
     echo "<table>";
     echo "<tr><th>Assignment Name </th><th>Due Date</th><th>Your Due Date</th>";
-     $newSql = "SELECT assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."' AND class='".$classRow['class']."'";
+     $newSql = "SELECT assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."' AND class='".$classRow['class']."' ORDER BY newDueDate";
      $newResult = $conn->query($newSql);
      while($curRow = $newResult->fetch_assoc()){
        $date = date_create($curRow['initDue']);
