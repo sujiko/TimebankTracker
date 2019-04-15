@@ -115,7 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				echo "<p class='warning'> You have ".$row['days']." Timebank days to use. </p>";
 				//echo "<div style='display: inline-block; text-align: left;'>";
 				echo "<table><caption>".$classRow['class']."</caption>";
-				$newSql = "SELECT assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."' AND class = '".$classRow['class']."' " ;
+				$newSql = "SELECT assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."' AND class = '".$classRow['class']."'ORDER BY newDueDate" ;
 				$newResult = $conn->query($newSql);
 				while($curRow = $newResult->fetch_assoc()){
 					$date = date_create($curRow['newDueDate']);
