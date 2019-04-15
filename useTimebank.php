@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<DOCTYPE html>
 <?php
 session_start();
 if(!isset($_SESSION["pid"])){ //if login in session is not set
@@ -91,9 +91,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 			$dbpass = $password;
 			$db = $database;
 			$conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
-			$sql = "SELECT days FROM students WHERE pid ='".$_SESSION['pid']."' ";
-			$result = $conn-> query($sql);
-			$row = $result->fetch_assoc();
 			if($updated == TRUE){
 				echo "<p class='goal'> Due Date Updated </p>";
 			}
@@ -102,31 +99,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				echo "<p class= 'valid'> That is not a valid timebank entry </p>";
 			}
 			$notValid = FALSE;	
-			echo "<p class='warning'> You have ".$row['days']." Timebank days to use. </p>";
 			echo '<div> <form method="POST" action="useTimebank.php" enctype="multipart/form-data">';
 			echo "<p>Choose an assignment: </p>";
 			$sqlClass = "SELECT class FROM students WHERE pid = '".$_SESSION['pid']."'";
 			$resultClass = $conn->query($sqlClass);
-			echo "<div style='display: inline-block; text-align: left;'>";
 			while($classRow = $resultClass->fetch_assoc()){
-				echo "<p> class: ".$classRow['class']."</p>";
+				$sql = "SELECT days FROM students WHERE pid ='".$_SESSION['pid']."' AND class = '".$classRow['class']."'";
+				$result = $conn-> query($sql);
+				$row = $result->fetch_assoc();
+				echo "<p class='warning'> You have ".$row['days']." Timebank days to use. </p>";
+				echo "<div style='display: inline-block; text-align: left;'>";
+				echo "<p>class: ".$classRow['class']."</p>";
+				echo "<table>";
 				$newSql = "SELECT assignmentName, initDue, newDueDate FROM assignments WHERE pid ='".$_SESSION['pid']."' AND class = '".$classRow['class']."' " ;
 				$newResult = $conn->query($newSql);
-				echo "<div>";
 				while($curRow = $newResult->fetch_assoc()){
-					echo "<input type='radio' name= 'assignment' value = '".$curRow['assignmentName'].",".$classRow['class']."' > ".$curRow["assignmentName"]."";
-					$counter = (40 - strlen($curRow["assignmentName"]));
-					for($counter; $counter > 0; $counter--){
-						echo "&nbsp";
-					}
-					echo "".$curRow['newDueDate']."<br>";
+					echo "<tr><td><input type='radio' name= 'assignment' value = '".$curRow['assignmentName'].",".$classRow['class']."' > ".$curRow["assignmentName"]."</td></br>";
+				//	echo "<td>".date_format($curRow['newDueDate'],"m/d/Y")."</td></tr>";
+					echo "<td>".$curRow['newDueDate']."</td></tr>";
 				}
-				echo "</div>";
+				echo "</table>";
 			}
 		?>
 		Number of Days to Use: <input type="number" min="0" name="days" required><br>
 		<input type="submit" value="Submit">
 		</form>
 		</div>
+		</br>
 	</body>
 </html>
