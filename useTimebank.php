@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$assignmentclass = explode(',',$_POST['assignment']);
 	$assignment = $assignmentclass[0];
 	$class = $assignmentclass[1];
-	$sqlHowMany = "SELECT days FROM students WHERE pid ='".$_SESSION['pid']."'";
+	$sqlHowMany = "SELECT days FROM students WHERE pid ='".$_SESSION['pid']."' AND class = '".$class."'";
 	$DaysLeft = $conn->query($sqlHowMany);
 	$dayRow = $DaysLeft->fetch_assoc();
 	$daysLeft = $dayRow['days'];
@@ -25,6 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if($daysLeft >= $_POST['days']){
 	$sqldays = 'UPDATE students SET days = (days - '.$_POST['days'].') WHERE pid = "'.$_SESSION['pid'].'" AND class= "'.$class.'"';
 	if($conn->query($sqldays) == TRUE){
+		$updated = TRUE;
+		$notValid = FALSE;
 	}else{
 		$notValid = TRUE;
 		$updated = FALSE;
@@ -32,7 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	}
 	$sqldays = 'UPDATE assignments SET daysUsed = (daysUsed + '.$_POST['days'].') WHERE pid= "'.$_SESSION['pid'].'" AND assignmentName = "'.$assignment.'" AND class= "'.$class.'"';
 	if($conn->query($sqldays) == TRUE){
-		
+                $updated = TRUE;
+                $notValid = FALSE;
 	}else{
 		$updated = TRUE;
 		$notValid = FALSE;
@@ -43,6 +46,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$row = $getdate->fetch_assoc();
 	$sqlDate = "UPDATE assignments SET newDueDate = DATE_ADD('".$row['newDueDate']."', INTERVAL ".$_POST['days']." DAY) WHERE assignmentName = '".$assignment."' AND pid = '".$_SESSION['pid']."' AND class= '".$class."'";
 	if ($conn->query($sqlDate) == TRUE) {
+                $updated = TRUE;
+                $notValid = FALSE;
 	} else {
 		$notValid = TRUE;
 		$updated = FALSE;
