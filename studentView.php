@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <?php
 session_start();
+$today = date("m/d/Y");
 if(!isset($_SESSION["pid"])){ //if login in session is not set
   header("Location: studentLogin.php");
 }
@@ -61,8 +62,10 @@ if(!isset($_SESSION["pid"])){ //if login in session is not set
        $newDue = date_create($curRow['newDueDate']);
         $newDue = date_format($newDue,"m/d/Y");
         $date = date_format($date,"m/d/Y");
+	if($today <= $newDue){
       echo "<tr><td>".$curRow['assignmentName']."</td><td>".$date."</td><td>".$newDue."</td>";
         }
+	}
       echo "</table><br>";
       }
 ?>

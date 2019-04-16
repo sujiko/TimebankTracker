@@ -1,6 +1,7 @@
 <DOCTYPE html>
 <?php
 session_start();
+$today = date("m/d/Y");
 if(!isset($_SESSION["pid"])){ //if login in session is not set
 	header("Location: studentLogin.php");
 }
@@ -119,9 +120,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 				$newResult = $conn->query($newSql);
 				while($curRow = $newResult->fetch_assoc()){
 					$date = date_create($curRow['newDueDate']);
+					$date = date_format($date,"m/d/Y");
+					if($today <= $date){
 					echo "<tr><td><input type='radio' name= 'assignment' value = '".$curRow['assignmentName'].",".$classRow['class']."' > ".$curRow["assignmentName"]."</td>";
 				//	echo "<td>".date_format($curRow['newDueDate'],"m/d/Y")."</td></tr>";
-					echo "<td>".date_format($date,"m/d/Y")."</td></tr>";
+					echo "<td>".$date."</td></tr>";
+				}
 				}
 				echo "</table>";
 			}
