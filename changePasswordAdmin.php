@@ -84,8 +84,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
 <h1>Change your password</h1>
 <form method="POST" action="changePasswordAdmin.php">
-Old Password: <input type="text" name = "oldpassword" required>
-New Password: <input type="text" name="password" required>
+Old Password: <input type="password" name = "oldpassword" required>
+New Password: <input type="password" name="password" required>
 <input type="submit" value = "submit">
 </form>
 </body>
