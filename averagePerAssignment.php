@@ -64,7 +64,6 @@ while($row = $result->fetch_assoc()){
   $newResult = $conn->query($newSql);
   while($curRow = $newResult->fetch_assoc()){
     $countSql = "select SUM(daysUsed) from assignments where class='".$row['class']."' and assignmentName='".$curRow['assignmentName']."'";
-    $totalSQL = "select SUM(daysUsed) from assignments where class'".$row['class']."'";
     $countRes = $conn->query($countSql);
     if (!$countRes) {
       die("Error executing query: ($conn->errno) $conn->error");
@@ -76,10 +75,11 @@ while($row = $result->fetch_assoc()){
     echo "<tr><td>".$curRow['assignmentName']."</td><td>".$date."</td><td>".$countRow['SUM(daysUsed)']."</td></tr>";
 	
   }
-  echo "</table><br>";
+  $totalSQL = "select SUM(daysUsed) from assignments where class='".$row['class']."'";
   $totalRes = $conn->query($totalSQL);
-  $totRow = $totalRes->fetch_assoc()
-	echo $totRow['SUM(daysUsed)'];
+  $totRow = $totalRes->fetch_assoc();
+	echo "<tr><td>total used per class</td><td>".$totRow['SUM(daysUsed)']."</td></tr>";
+  echo "</table><br>";
 
 }
 ?>
