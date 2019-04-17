@@ -59,7 +59,7 @@ $sql = "select distinct class from students";
 $result = $conn->query($sql);
 while($row = $result->fetch_assoc()){
   echo "<table><caption>".$row['class']."</caption>";
-  echo "<tr><th>Assignment Name</th><th>Initial Due Date</th><th>total used</th>";
+  echo "<tr><th>Assignment Name</th><th>Initial Due Date</th><th>Total Used</th>";
   $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' order by initDue ";
   $newResult = $conn->query($newSql);
   while($curRow = $newResult->fetch_assoc()){
@@ -78,7 +78,7 @@ while($row = $result->fetch_assoc()){
   $totalSQL = "select SUM(daysUsed) from assignments where class='".$row['class']."'";
   $totalRes = $conn->query($totalSQL);
   $totRow = $totalRes->fetch_assoc();
-	echo "<tr><td>total used per class</td><td>".$totRow['SUM(daysUsed)']."</td></tr>";
+	echo "<tr><td>Total used per class</td><td>".$totRow['SUM(daysUsed)']."</td></tr>";
   echo "</table><br>";
 
 }
