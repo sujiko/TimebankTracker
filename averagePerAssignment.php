@@ -8,7 +8,7 @@ if(!isset($_SESSION["username"])){ //if login in session is not set
 <html>
 <head>
 <link rel="stylesheet" href = "home.css">
-<title>View Assignments</title>
+<title>Average Per Assignment</title>
 <meta charset = "utf-8">
 </head>
 <div class="navbar">
