@@ -44,12 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
           }else{
               $ahh =True;
-            $thing = "<p>some students are already in system</p>";
+            $thing = "<p>Error: Some students are already in system</p>";
           }
           }else{
             fclose($myfile);
             $ahh =True;
-            $thing = "<p>that file is not formatted properly</p>";
+            $thing = "<p>Error: That file is not formatted properly</p>";
             break; 
           }
         }
@@ -57,12 +57,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       }
       else{
         //something wasn't right with the csv
-        echo "could not open";
+        echo "Error: Could not open";
       }
     }
     else{
       //thats not a csv mate
-      echo "not a csv";
+      echo "Error: Not a csv";
     }
   }
 }
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html>
   <meta charset="UTF-8">
   <link rel="stylesheet" href = "home.css">
-  <title>upload page</title>
+  <title>Upload Students </title>
 <body>
 <div class="navbar">
   <a href="adminHome.php">Home</a>
