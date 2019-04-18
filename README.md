@@ -12,8 +12,10 @@ This webpage has a CSV format That must be used for each of the functionalites.
 ###### Files to change
 To ensure this works you must go into the db.SQL file provided and change line 1 to the name of your database.
 ![alt text](https://github.com/sujiko/TimebankTracker/blob/master/ReadmeImages/Screen%20Shot%202019-04-18%20at%2012.23.33%20PM.png)
+
 Then change the insert into admin down near the bottom, removing students and changing the second word in the encode from project to which encodekey is desired, this also needs to be reflected in the config file.
 ![alt text](https://github.com/sujiko/TimebankTracker/blob/master/ReadmeImages/Screen%20Shot%202019-04-18%20at%2012.23.38%20PM.png)
+
 You need to make a config file two directories up from where you put the index code. A config file should be named config.php and should like this:
 ![alt text](https://github.com/sujiko/TimebankTracker/blob/master/ReadmeImages/example%20config.png)
 #### Student CSV
