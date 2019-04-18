@@ -15,6 +15,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $userpassword = $_POST["password"];
   // Get user's hashed password from the Users table
    $conn = new mysqli($dbhost, $dbuser, $dbpass, $db);
+   $temp = explode(",",$_POST['assignmentName']);
+   $class = $temp[0];
+   $assignment = $temp[1];
+   if ($_POST['doing'] == 'delete'){
+      $sql = "delete from assignments where class='".$class."' and assignmentName='".$assignment."'";
+     $result= $conn->query($sql);
+   }else if ($_POST['doing'] == 'update'){
+      echo $_POST['newDate'];
+      $date = date_create($_POST['newDate']);
+      $date = date_format($date,"Y-m-d");
+      echo $date;
+      $sql = "update assignments set initDue ='".$date."' where class='".$class."' and assignmentName='".$assignment."' ";
+     $result= $conn->query($sql);
+   }
+
 }
 ?>
 <html>
@@ -73,16 +88,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    while($row = $result->fetch_assoc()){
      echo "<table><caption>".$row['class']."</caption>";
      echo "<tr><th>Assignment Name</th><th>Initial Due Date</th>";
-     $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' ";
+     $newSql = "select distinct assignmentName, initDue from assignments where class='".$row['class']."' order by initDue ";
      $newResult = $conn->query($newSql);
      while($curRow = $newResult->fetch_assoc()){
        $date = date_create($curRow['initDue']);
-       echo "<tr><td><input type='radio' name='assignmentName' value='".$row['class']." ".$curRow['assignmentName']."'>";
+       echo "<tr><td><input type='radio' name='assignmentName' value='".$row['class'].",".$curRow['assignmentName']."'>";
        echo $curRow['assignmentName']."</td><td>".date_format($date,"m/d/Y")."</td></tr>";
      }
      echo "</table><br>";
    }
 ?>
+   new due date if needed   <input type="date" name="newDate">
       <select name="doing">
         <option>update</option>
         <option>delete</option>
