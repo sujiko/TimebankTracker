@@ -96,7 +96,7 @@ while($row = $result->fetch_assoc()){
 echo "</ul>";
 ?>
   Assignment name<br><input type="text" name="assignmentName" required><br><br>
-  initial due date<br><input type="date"name="initDue" required><br><br>
+  Initial due date<br><input type="date"name="initDue" required><br><br>
 <input type="submit" value="submit">
 </form>
 </div>

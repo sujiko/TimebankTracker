@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 <a href="http://cs.umw.edu/mediawiki/index.php/CPSC_Department_Honor_Code_Policy">UMW CPSC Honor Code Policy</a>
 <form method="POST" action="agreement.php">
 <input type="checkbox" required name="checkbox" value="check"> I have read and agree to the Terms and Conditions<br>
-New Password: <input type="text" name="password" required>
+New Password: <input type="password" name="password" required>
 <input type="submit" value="submit" >
 </form>
 </body>

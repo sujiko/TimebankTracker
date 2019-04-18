@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 <html>
 <head>
 <link rel="stylesheet" href = "home.css">
-<title>View Classes</title>
+<title>Give Day</title>
 <meta charset = "utf-8">
 </head>
 <div class="navbar">
@@ -91,8 +91,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
      echo "</table><br>";
    }
 ?>
-  <label>input student pid</label><input type="text" name='pid'required><br>
-  <label>how many days to give</label><input type="number" min="0" name='days'required><br>
+  <label>Input student PID</label><input type="text" name='pid'required><br>
+  <label>How many days to give</label><input type="number" min="0" name='days'required><br>
 <input type="submit" value = "submit">
   
 </body>
