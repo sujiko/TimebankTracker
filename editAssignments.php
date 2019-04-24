@@ -22,11 +22,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $sql = "delete from assignments where class='".$class."' and assignmentName='".$assignment."'";
      $result= $conn->query($sql);
    }else if ($_POST['doing'] == 'update'){
-      echo $_POST['newDate'];
       $date = date_create($_POST['newDate']);
       $date = date_format($date,"Y-m-d");
-      echo $date;
-      $sql = "update assignments set initDue ='".$date."' where class='".$class."' and assignmentName='".$assignment."' ";
+      $sql = "update assignments set initDue ='".$date."', newDueDate='".$date."' where class='".$class."' and assignmentName='".$assignment."' ";
      $result= $conn->query($sql);
    }
 
